@@ -13,7 +13,8 @@ async function run(): Promise<void> {
         // Retrieve the values for each input
         inputNames.forEach((name) => {
             const inputName = name.slice(6); // Remove "INPUT_" prefix
-            const inputValue = core.getInput(inputName, { required: true }); // Specify 'required: true' if desired
+            const inputRawValue = process.env[name] || '';
+            const inputValue = inputRawValue.replace(/%0A/g, '\n').trim();
             inputs[inputName] = inputValue;
         });
 
