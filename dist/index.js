@@ -2745,8 +2745,16 @@ const core = __importStar(__nccwpck_require__(186));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const nameToGreet = core.getInput("name-to-greet");
-            console.log(`Hello ${nameToGreet}!`);
+            const inputs = {};
+            // Retrieve all the input names
+            const inputNames = Object.keys(process.env).filter((key) => key.startsWith('INPUT_'));
+            // Retrieve the values for each input
+            inputNames.forEach((name) => {
+                const inputName = name.slice(6); // Remove "INPUT_" prefix
+                const inputValue = core.getInput(inputName);
+                inputs[inputName] = inputValue;
+            });
+            console.log('All inputs:', inputs);
         }
         catch (error) {
             if (error instanceof Error)
